@@ -2,15 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cw3_s19270.DAL;
+using cw3_s19270.Models;
+using cw3_s19270.Properties.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ćw_5
+namespace cw3_s19270
 {
     public class Startup
     {
@@ -24,6 +28,9 @@ namespace ćw_5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IStudentDbService, OracleStudentDbService>();
+            services.AddSingleton<IDbService, MockDBService>();
+            services.AddScoped<IStudentDal, SqlServerDbDal>();
             services.AddControllers();
         }
 
@@ -34,6 +41,8 @@ namespace ćw_5
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
