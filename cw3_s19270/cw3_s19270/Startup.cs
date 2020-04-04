@@ -28,7 +28,7 @@ namespace cw3_s19270
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IStudentDbService, OracleStudentDbService>();
+            services.AddTransient<IStudentDbService, SqlServerDbService>();
             services.AddSingleton<IDbService, MockDBService>();
             services.AddScoped<IStudentDal, SqlServerDbDal>();
             services.AddControllers();
